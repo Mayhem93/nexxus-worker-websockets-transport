@@ -1,0 +1,42 @@
+{
+	"database": {
+		"host": "localhost",
+		"port": 9200
+	},
+	"message_queue": {
+		"host": "localhost",
+		"port": 5672,
+		"user": "guest",
+		"password": "guest"
+	},
+	"redis": {
+		"host": "localhost",
+		"port": 6379,
+		"cluster": false,
+		"password": "1234test"
+	},
+	"app": {
+		"name": "test",
+    "port": 7000,
+    "logger": "WinstonNexxusLogger",
+    "database": "NexxusElasticsearchDb",
+    "message_queue": "NexxusRabbitMq",
+    "management": {
+      "port": 9001,
+      "token": "test"
+    },
+    "hub": {
+      "endpoint": "http://localhost:9000",
+      "token": "test"
+    }
+	},
+	"logger": {
+		"level": "info",
+		"logType": "json",
+		"transports": [
+			{
+				"type": "stdout"
+			}
+		]
+	}
+}
