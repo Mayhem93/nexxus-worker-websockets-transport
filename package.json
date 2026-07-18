@@ -1,6 +1,6 @@
 {
   "name": "nexxus-worker-websockets-transport",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nexxus worker responsible for sending notifications to websocket clients",
   "type": "module",
   "private": true,
@@ -28,11 +28,11 @@
   "author": "Răzvan Botea <contact@razvanbotea.me>",
   "license": "MPL-2.0",
   "dependencies": {
-    "@mayhem93/nexxus-core-lib": "^0.0.5",
-    "@mayhem93/nexxus-database-lib": "^0.0.6",
-    "@mayhem93/nexxus-message-queue-lib": "^0.0.5",
+    "@mayhem93/nexxus-core-lib": "^0.0.6",
+    "@mayhem93/nexxus-database-lib": "^0.0.7",
+    "@mayhem93/nexxus-message-queue-lib": "^0.0.6",
     "@mayhem93/nexxus-redis": "^0.0.7",
-    "@mayhem93/nexxus-worker-lib": "^0.0.6"
+    "@mayhem93/nexxus-worker-lib": "^0.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
