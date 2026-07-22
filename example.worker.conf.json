@@ -7,7 +7,11 @@
 		"host": "localhost",
 		"port": 5672,
 		"user": "guest",
-		"password": "guest"
+		"password": "guest",
+    "compression": {
+      "enabled": true,
+      "algo": "lz4"
+    }
 	},
 	"redis": {
 		"host": "localhost",
