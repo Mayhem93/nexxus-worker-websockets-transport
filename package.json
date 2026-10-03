@@ -1,6 +1,6 @@
 {
   "name": "nexxus-worker-websockets-transport",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Nexxus worker responsible for sending notifications to websocket clients",
   "type": "module",
   "private": true,
