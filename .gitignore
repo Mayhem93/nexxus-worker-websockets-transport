@@ -4,3 +4,4 @@ dist
 *.tsbuildinfo
 CLAUDE.md
 logs
+_example*

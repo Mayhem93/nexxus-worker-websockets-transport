@@ -5,20 +5,21 @@ import {
   type INexxusBaseServices,
 } from '@mayhem93/nexxus-core-lib';
 import { NexxusRedis } from '@mayhem93/nexxus-redis';
-import { NexxusWebsocketsTransportWorker } from '@mayhem93/nexxus-worker-lib';
+import { NexxusWebsocketsTransportWorker, NexxusWebsocketsTransportWorkerConfig } from '@mayhem93/nexxus-worker-lib';
 import type { NexxusDatabaseAdapter } from '@mayhem93/nexxus-database-lib';
 import type { NexxusMessageQueueAdapter } from '@mayhem93/nexxus-message-queue-lib';
 
 let logger: NexxusBaseLogger<any> | undefined;
+let configManager: NexxusConfigManager | undefined;
 
 (async () => {
-  const configManager = new NexxusConfigManager();
+  configManager = new NexxusConfigManager();
 
   // Register the framework-fixed services (API + Redis are not pluggable)
   // so we can read `app.logger` / `app.database` / `app.message_queue`.
   await configManager.validateServices([NexxusWebsocketsTransportWorker, NexxusRedis]);
 
-  const workerConfig = configManager.getConfig('app') as any; //TODO: fix nexxus-lib NexxusWebsocketsTransportWorkerConfig export
+  const workerConfig = configManager.getConfig('app') as NexxusWebsocketsTransportWorkerConfig; //TODO: fix nexxus-lib NexxusWebsocketsTransportWorkerConfig export
 
   const LoggerClass = await NexxusWebsocketsTransportWorker.resolveFactoryService(configManager, workerConfig.logger);
   const DbClass     = await NexxusWebsocketsTransportWorker.resolveConstructableService(configManager, workerConfig.database);
@@ -45,16 +46,10 @@ let logger: NexxusBaseLogger<any> | undefined;
   const redis = new NexxusRedis({ configManager, logger });
   const worker   = new NexxusWebsocketsTransportWorker({ configManager, logger, database: db, messageQueue: mq, redis });
 
-  await db.connect();
-  await mq.connect();
-  await redis.init();
   await worker.init();
 
   const shutdown = (): void => {
     worker.close();
-    mq.disconnect();
-    db.disconnect();
-    redis.close();
   };
 
   process.once('SIGTERM', shutdown);
@@ -65,7 +60,7 @@ let logger: NexxusBaseLogger<any> | undefined;
   if (logger) {
     logger.emerg(message, 'NxxWebsocketsTransport');
   } else {
-    console.error(message);
+    configManager!.fallbackLogger.emerg(`Fatal error: ${message}`, { error: message }, 'NxxWebsocketsTransport');
   }
 
   if (err instanceof FatalErrorException) {
