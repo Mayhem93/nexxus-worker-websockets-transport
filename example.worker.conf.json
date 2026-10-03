@@ -6,8 +6,8 @@
 	"message_queue": {
 		"host": "localhost",
 		"port": 5672,
-		"user": "guest",
-		"password": "guest",
+		"user": "nexxus",
+		"password": "1234test",
     "compression": {
       "enabled": true,
       "algo": "lz4"
